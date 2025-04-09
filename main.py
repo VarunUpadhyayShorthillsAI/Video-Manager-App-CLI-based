@@ -1,3 +1,5 @@
+import json
+
 def list_all_videos (videos):
     pass
 
@@ -10,11 +12,27 @@ def update_video(videos):
 def delete_video(videos):
     pass
 
+def load_data():
+    #loading data , obvio we need a file to load data , we will use in the read mode , otherwise in write mode , it will keep creating files
+    #two types of except , finenot found or file exist error 
+    try:
+        #you will generally use only two methods dump and load 
+        with open('youtube.txt' , 'r') as file : 
+            return json.load(file)
+
+
+    except FileNotFoundError:
+        return []
+        
+   
 
 videos = []
 
 def main() : 
+    vidoes = load_data()
+
     while True:
+
         print("\n Youtube Manager | Choose an option")
         print(" 1. List all Youtube videos")
         print(" 2. Add a youtube video")
