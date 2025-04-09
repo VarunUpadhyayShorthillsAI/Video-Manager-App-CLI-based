@@ -32,3 +32,14 @@
 # with open('youtube.txt' , 'w') as file:
 #     file.write('just another syntax , it automatically take cares of the closing , easy syntax')
 
+#functionality so that user keep asking questions :
+while True:
+    print("\n Youtube Manager | Choose an option")
+    print(" 1. List all Youtube videos")
+    print(" 2. Add a youtube video")
+    print(" 3. Update a youtube video details")
+    print("4. Delete a youtube video")
+    print("5. Exit the app")
+    choice = input("Enter your choice")
+
+    
