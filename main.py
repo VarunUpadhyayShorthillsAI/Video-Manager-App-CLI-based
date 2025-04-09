@@ -1,38 +1,19 @@
-# Definition and Usage
-# The enumerate() function takes a collection (e.g. a tuple) and returns it as an enumerate object.
+def list_all_videos (videos):
+    pass
 
-# The enumerate() function adds a counter as the key of the enumerate object.
+def add_video(videos):
+    pass
 
-# Syntax
-# enumerate(iterable, start)
+def update_video(videos):
+    pass
 
-
-# x = ('Man' , 'Woman' , 'Others')
-# y = enumerate(x)
-# print(y)
-# new_format = list(y)
-# print(new_format)
+def delete_video(videos):
+    pass
 
 
+videos = []
 
-#to open any file (will give error)
-# file = open('test.py' )
 
-#write mode autmatically create file , if there isn't
-# file = open('youtube.txt' , 'w')
-
-# try:
-#     file.write('Writing in the file for testing purpose')
-# finally:
-#     file.close()
-
-# try , finally -> for error handling || 
-#another syntax for files ,
-
-# with open('youtube.txt' , 'w') as file:
-#     file.write('just another syntax , it automatically take cares of the closing , easy syntax')
-
-#functionality so that user keep asking questions :
 while True:
     print("\n Youtube Manager | Choose an option")
     print(" 1. List all Youtube videos")
@@ -42,4 +23,24 @@ while True:
     print("5. Exit the app")
     choice = input("Enter your choice")
 
-    
+    #match syntax
+    match choice:
+        case '1' : 
+            list_all_videos(videos)
+        
+        case '2':
+            add_video(videos)
+
+        case '3':
+            update_video(videos)
+
+        case '4':
+            delete_video(videos)
+
+        case '5':
+            break
+
+        #if any one enters random number
+
+        case _:
+            print("Invalid Choice")
