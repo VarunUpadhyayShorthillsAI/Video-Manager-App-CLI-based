@@ -19,9 +19,16 @@
 # file = open('test.py' )
 
 #write mode autmatically create file , if there isn't
-file = open('youtube.txt' , 'w')
+# file = open('youtube.txt' , 'w')
 
-try:
-    file.write('Writing in the file for testing purpose')
-finally:
-    file.close()
+# try:
+#     file.write('Writing in the file for testing purpose')
+# finally:
+#     file.close()
+
+# try , finally -> for error handling || 
+#another syntax for files ,
+
+# with open('youtube.txt' , 'w') as file:
+#     file.write('just another syntax , it automatically take cares of the closing , easy syntax')
+
