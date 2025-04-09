@@ -7,13 +7,21 @@
 # enumerate(iterable, start)
 
 
-x = ('Man' , 'Woman' , 'Others')
-y = enumerate(x)
-print(y)
-new_format = list(y)
-print(new_format)
+# x = ('Man' , 'Woman' , 'Others')
+# y = enumerate(x)
+# print(y)
+# new_format = list(y)
+# print(new_format)
 
 
 
-#to open any file 
-file = open(test.py)
+#to open any file (will give error)
+# file = open('test.py' )
+
+#write mode autmatically create file , if there isn't
+file = open('youtube.txt' , 'w')
+
+try:
+    file.write('Writing in the file for testing purpose')
+finally:
+    file.close()
