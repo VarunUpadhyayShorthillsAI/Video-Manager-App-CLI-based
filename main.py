@@ -1,7 +1,8 @@
 import json
 
 def list_all_videos (videos):
-    pass
+    for index , video in enumerate(videos , start = 1):
+        print(f"{index}. ")
 
 def add_video(videos):
     pass
@@ -24,7 +25,12 @@ def load_data():
     except FileNotFoundError:
         return []
         
-   
+#for saving data 
+def save_data_helper(vidoes):
+    with open('youtube.txt'  , 'w') as file:
+        #kya likhna hai , kahaan par likhna hai 
+        json.dump(vidoes , file)
+
 
 videos = []
 
