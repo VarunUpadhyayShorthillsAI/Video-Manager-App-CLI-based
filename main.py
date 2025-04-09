@@ -13,34 +13,43 @@ def delete_video(videos):
 
 videos = []
 
+def main() : 
+    while True:
+        print("\n Youtube Manager | Choose an option")
+        print(" 1. List all Youtube videos")
+        print(" 2. Add a youtube video")
+        print(" 3. Update a youtube video details")
+        print("4. Delete a youtube video")
+        print("5. Exit the app")
+        choice = input("Enter your choice")
 
-while True:
-    print("\n Youtube Manager | Choose an option")
-    print(" 1. List all Youtube videos")
-    print(" 2. Add a youtube video")
-    print(" 3. Update a youtube video details")
-    print("4. Delete a youtube video")
-    print("5. Exit the app")
-    choice = input("Enter your choice")
+        #match syntax
+        match choice:
+            case '1' : 
+                list_all_videos(videos)
+            
+            case '2':
+                add_video(videos)
 
-    #match syntax
-    match choice:
-        case '1' : 
-            list_all_videos(videos)
-        
-        case '2':
-            add_video(videos)
+            case '3':
+                update_video(videos)
 
-        case '3':
-            update_video(videos)
+            case '4':
+                delete_video(videos)
 
-        case '4':
-            delete_video(videos)
+            case '5':
+                break
 
-        case '5':
-            break
+            #if any one enters random number
 
-        #if any one enters random number
+            case _:
+                print("Invalid Choice")
 
-        case _:
-            print("Invalid Choice")
+
+#you can also call main like this , but 
+# we keep exporting , importing things , so we use dunder __i__ type 
+# main()
+
+
+if __name__ == "__main__":
+    main()
