@@ -5,7 +5,12 @@ def list_all_videos (videos):
         print(f"{index}. ")
 
 def add_video(videos):
-    pass
+    name = input("Enter video name:")
+    time = input("Enter video time:")
+
+    # format : [{name:"" , time:""} , {}]
+    videos.append({'name':name , 'time': time})
+    save_data_helper(videos  )
 
 def update_video(videos):
     pass
@@ -26,27 +31,27 @@ def load_data():
         return []
         
 #for saving data 
-def save_data_helper(vidoes):
+def save_data_helper(videos):
     with open('youtube.txt'  , 'w') as file:
         #kya likhna hai , kahaan par likhna hai 
-        json.dump(vidoes , file)
+        json.dump(videos , file)
 
 
 videos = []
 
 def main() : 
-    vidoes = load_data()
+    videos = load_data()
 
     while True:
 
         print("\n Youtube Manager | Choose an option")
-        print(" 1. List all Youtube videos")
-        print(" 2. Add a youtube video")
-        print(" 3. Update a youtube video details")
+        print("1. List all Youtube videos")
+        print("2. Add a youtube video")
+        print("3. Update a youtube video details")
         print("4. Delete a youtube video")
         print("5. Exit the app")
-        choice = input("Enter your choice")
-
+        choice = input("Enter your choice \n")
+        
         #match syntax
         match choice:
             case '1' : 
