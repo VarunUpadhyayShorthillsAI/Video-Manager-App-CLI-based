@@ -1,0 +1,1 @@
+name = input("Hey bud what's your name")
