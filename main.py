@@ -1,96 +1,106 @@
 import json
 
+# Function to display all videos with index, name, and duration
 def list_all_videos(videos):
     print('\n') 
-    print('*'*70)
+    print('*' * 70)
 
+    # Using enumerate to show each video with a 1-based index
     for index, video in enumerate(videos, start=1):
         print(f"{index}. Name: {video['name']}, Duration: {video['time']}")
 
     print('\n') 
-    print('*'*70)
+    print('*' * 70)
 
+# Function to add a new video
 def add_video(videos):
-    name = input("Enter video name:")
-    time = input("Enter video time:")
+    # Ask user for name and duration of video
+    name = input("Enter video name: ")
+    time = input("Enter video time: ")
 
-    # format : [{name:"" , time:""} , {}]
-    videos.append({'name':name , 'time': time})
-    save_data_helper(videos  )
+    # Append a new video dictionary to the list
+    videos.append({'name': name, 'time': time})
 
+    # Save the updated data
+    save_data_helper(videos)
+
+# Function to update an existing video
 def update_video(videos):
-    # First we will ask which video you want to update
-    # So we have to show the videos list and pass the videos to list_all_videos
+    # Display current list of videos
     list_all_videos(videos)
-    
+
+    # Ask for the index of the video to update
     index = int(input("Enter the index for the video you want to update: "))
-    
+
+    # Validate the index
     if index < 1 or index > len(videos):
         print("Enter a valid index >>>")
     else:
-        name = input("Enter name of the video :")
-        time = input("Enter duration for the video:")
-    #you got the time and name , now update the video based on the index 
-        videos[index -1] = {'name':name , 'time':time}
-        save_data_helper(videos) 
+        # Ask for updated name and duration
+        name = input("Enter name of the video: ")
+        time = input("Enter duration for the video: ")
 
+        # Update the video at the given index (subtracting 1 for 0-based index)
+        videos[index - 1] = {'name': name, 'time': time}
+
+        # Save the updated data
+        save_data_helper(videos)
+
+# Function to delete a video from the list
 def delete_video(videos):
-    #to delete a video show the list and then we will choose index , and then proceed
+    # Show the list before asking for index
     list_all_videos(videos)
-    index = int(input("Enter the video number to be deleted"))
+    index = int(input("Enter the video number to be deleted: "))
 
-
+    # Validate the index
     if index < 1 or index > len(videos):
-            print("Enter a valid index >>>")
+        print("Enter a valid index >>>")
     else:
-        del[videos[index-1]]
-        #del will return you modified list or original list??
-        save_data_helper(videos) 
-        
+        # Delete the video from the list
+        del videos[index - 1]
 
+        # Save the updated data
+        save_data_helper(videos)
+
+# Load video data from a file
 def load_data():
-    #loading data , obvio we need a file to load data , we will use in the read mode , otherwise in write mode , it will keep creating files
-    #two types of except , finenot found or file exist error 
+    # Attempt to open the file in read mode and load JSON data
     try:
-        #you will generally use only two methods dump and load 
-        with open('youtube.txt' , 'r') as file : 
+        with open('youtube.txt', 'r') as file:
             test = json.load(file)
-            # #this is a list , but list in json
-            # print(type (test))
             return test
-
-
     except FileNotFoundError:
+        # If file not found, return an empty list
         return []
-        
-#for saving data 
+
+# Save video data to a file
 def save_data_helper(videos):
-    with open('youtube.txt'  , 'w') as file:
-        #kya likhna hai , kahaan par likhna hai 
-        json.dump(videos , file)
+    # Open the file in write mode and dump the list as JSON
+    with open('youtube.txt', 'w') as file:
+        json.dump(videos, file)
 
-
-videos = []
-
-def main() : 
-    videos = load_data()
+# Main app loop
+def main():
+    videos = load_data()  # Load existing data
     print('\n') 
-    print('*'*70)
+    print('*' * 70)
+
     while True:
-        
-        print("\n Youtube Manager | Choose an option")
-        print("1. List all Youtube videos")
-        print("2. Add a youtube video")
-        print("3. Update a youtube video details")
-        print("4. Delete a youtube video")
+        # Menu options
+        print("\nYouTube Manager | Choose an option")
+        print("1. List all YouTube videos")
+        print("2. Add a YouTube video")
+        print("3. Update a YouTube video details")
+        print("4. Delete a YouTube video")
         print("5. Exit the app")
-        choice = input("Enter your choice : \n")
-        
-        #match syntax
+
+        choice = input("Enter your choice: \n")
+
+        # Match-case for cleaner branching (Python 3.10+)
         match choice:
-            case '1' : 
+            case '1':
                 list_all_videos(videos)
-            
+
             case '2':
                 add_video(videos)
 
@@ -101,31 +111,14 @@ def main() :
                 delete_video(videos)
 
             case '5':
-                break
-
-            #if any one enters random number
+                break  # Exit the loop and program
 
             case _:
-                print("Invalid Choice")
+                print("Invalid Choice")  # Catch all other inputs
 
         print('\n') 
-        print('*'*70)
-#you can also call main like this , but 
-# we keep exporting , importing things , so we use dunder __i__ type 
-# main()
+        print('*' * 70)
 
-
+# Standard Python entry-point guard
 if __name__ == "__main__":
     main()
-
-
-
-# you have made tuples from the list , but you have this type of data this time:
-# (1 , {'name': 'chai' , 'time': '2min'})
-# (2 , {'name': 'code' , 'time': '3min'})
-# for i in enumerate (list , start = 1):
-#     print(i)
-
-
-# obviously the count is your 'i' but in the right side you have the video
-#     print(f"{i} , {video['name]}")
