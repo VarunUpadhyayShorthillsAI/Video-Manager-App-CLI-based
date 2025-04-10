@@ -28,11 +28,14 @@ def update_video(videos):
     if index < 1 or index > len(videos):
         print("Enter a valid index >>>")
     else:
-        # Placeholder for actual update logic
-        print("Update logic goes here.")
-
+        name = input("Enter name of the video :")
+        time = input("Enter duration for the video:")
+    #you got the time and name , now update the video based on the index 
+        videos[index -1] = {'name':name , 'time':time}
+        save_data_helper(videos) 
 
 def delete_video(videos):
+    #to delete a video show the list and then we will choose index , and then proceed
     pass
 
 def load_data():
