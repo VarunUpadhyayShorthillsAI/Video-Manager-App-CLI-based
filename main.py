@@ -1,9 +1,14 @@
 import json
 
 def list_all_videos(videos):
-    for index, video in enumerate(videos, start=0):
-        print(f"{index}. Name: {video['name']}, Time: {video['time']}")
+    print('\n') 
+    print('*'*70)
 
+    for index, video in enumerate(videos, start=1):
+        print(f"{index}. Name: {video['name']}, Duration: {video['time']}")
+
+    print('\n') 
+    print('*'*70)
 
 def add_video(videos):
     name = input("Enter video name:")
@@ -14,7 +19,18 @@ def add_video(videos):
     save_data_helper(videos  )
 
 def update_video(videos):
-    pass
+    # First we will ask which video you want to update
+    # So we have to show the videos list and pass the videos to list_all_videos
+    list_all_videos(videos)
+    
+    index = int(input("Enter the index for the video you want to update: "))
+    
+    if index < 1 or index > len(videos):
+        print("Enter a valid index >>>")
+    else:
+        # Placeholder for actual update logic
+        print("Update logic goes here.")
+
 
 def delete_video(videos):
     pass
@@ -45,16 +61,17 @@ videos = []
 
 def main() : 
     videos = load_data()
-
+    print('\n') 
+    print('*'*70)
     while True:
-
+        
         print("\n Youtube Manager | Choose an option")
         print("1. List all Youtube videos")
         print("2. Add a youtube video")
         print("3. Update a youtube video details")
         print("4. Delete a youtube video")
         print("5. Exit the app")
-        choice = input("Enter your choice \n")
+        choice = input("Enter your choice : \n")
         
         #match syntax
         match choice:
@@ -78,7 +95,8 @@ def main() :
             case _:
                 print("Invalid Choice")
 
-
+        print('\n') 
+        print('*'*70)
 #you can also call main like this , but 
 # we keep exporting , importing things , so we use dunder __i__ type 
 # main()
