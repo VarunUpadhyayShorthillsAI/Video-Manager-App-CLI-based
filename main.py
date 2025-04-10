@@ -36,7 +36,17 @@ def update_video(videos):
 
 def delete_video(videos):
     #to delete a video show the list and then we will choose index , and then proceed
-    pass
+    list_all_videos(videos)
+    index = int(input("Enter the video number to be deleted"))
+
+
+    if index < 1 or index > len(videos):
+            print("Enter a valid index >>>")
+    else:
+        del[videos[index-1]]
+        #del will return you modified list or original list??
+        save_data_helper(videos) 
+        
 
 def load_data():
     #loading data , obvio we need a file to load data , we will use in the read mode , otherwise in write mode , it will keep creating files
