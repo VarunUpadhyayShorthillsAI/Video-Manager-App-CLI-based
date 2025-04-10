@@ -1,8 +1,9 @@
 import json
 
-def list_all_videos (videos):
-    for index , video in enumerate(videos , start = 1):
-        print(f"{index}. ")
+def list_all_videos(videos):
+    for index, video in enumerate(videos, start=0):
+        print(f"{index}. Name: {video['name']}, Time: {video['time']}")
+
 
 def add_video(videos):
     name = input("Enter video name:")
@@ -24,7 +25,10 @@ def load_data():
     try:
         #you will generally use only two methods dump and load 
         with open('youtube.txt' , 'r') as file : 
-            return json.load(file)
+            test = json.load(file)
+            # #this is a list , but list in json
+            # print(type (test))
+            return test
 
 
     except FileNotFoundError:
@@ -82,3 +86,15 @@ def main() :
 
 if __name__ == "__main__":
     main()
+
+
+
+# you have made tuples from the list , but you have this type of data this time:
+# (1 , {'name': 'chai' , 'time': '2min'})
+# (2 , {'name': 'code' , 'time': '3min'})
+# for i in enumerate (list , start = 1):
+#     print(i)
+
+
+# obviously the count is your 'i' but in the right side you have the video
+#     print(f"{i} , {video['name]}")

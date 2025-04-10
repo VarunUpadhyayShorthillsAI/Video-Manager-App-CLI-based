@@ -1,1 +1,1 @@
-[{"name": "mcu", "time": "24"}]
+[{"name": "mcu", "time": "24"}, {"name": "dc", "time": "120"}]
