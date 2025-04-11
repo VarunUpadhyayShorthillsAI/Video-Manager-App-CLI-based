@@ -1,124 +1,153 @@
-import json
+import random
 
-# Function to display all videos with index, name, and duration
-def list_all_videos(videos):
-    print('\n') 
-    print('*' * 70)
+MAX_LINES = 3
+MAX_BET = 100
+MIN_BET = 1
 
-    # Using enumerate to show each video with a 1-based index
-    for index, video in enumerate(videos, start=1):
-        print(f"{index}. Name: {video['name']}, Duration: {video['time']}")
+ROWS = 3
+COLS = 3
 
-    print('\n') 
-    print('*' * 70)
+symbol_count = {
+    "A": 2,
+    "B": 4,
+    "C": 6,
+    "D": 8
+}
 
-# Function to add a new video
-def add_video(videos):
-    # Ask user for name and duration of video
-    name = input("Enter video name: ")
-    time = input("Enter video time: ")
+symbol_value = {
+    "A": 5,
+    "B": 4,
+    "C": 3,
+    "D": 2
+}
 
-    # Append a new video dictionary to the list
-    videos.append({'name': name, 'time': time})
 
-    # Save the updated data
-    save_data_helper(videos)
+def check_winnings(columns, lines, bet, values):
+    winnings = 0
+    winning_lines = []
+    for line in range(lines):
+        symbol = columns[0][line]
+        for column in columns:
+            symbol_to_check = column[line]
+            if symbol != symbol_to_check:
+                break
+        else:
+            winnings += values[symbol] * bet
+            winning_lines.append(line + 1)
 
-# Function to update an existing video
-def update_video(videos):
-    # Display current list of videos
-    list_all_videos(videos)
+    return winnings, winning_lines
 
-    # Ask for the index of the video to update
-    index = int(input("Enter the index for the video you want to update: "))
 
-    # Validate the index
-    if index < 1 or index > len(videos):
-        print("Enter a valid index >>>")
-    else:
-        # Ask for updated name and duration
-        name = input("Enter name of the video: ")
-        time = input("Enter duration for the video: ")
+def get_slot_machine_spin(rows, cols, symbols):
+    all_symbols = []
+    for symbol, symbol_count in symbols.items():
+        for _ in range(symbol_count):
+            all_symbols.append(symbol)
 
-        # Update the video at the given index (subtracting 1 for 0-based index)
-        videos[index - 1] = {'name': name, 'time': time}
+    columns = []
+    for _ in range(cols):
+        column = []
+        current_symbols = all_symbols[:]
+        for _ in range(rows):
+            value = random.choice(current_symbols)
+            current_symbols.remove(value)
+            column.append(value)
 
-        # Save the updated data
-        save_data_helper(videos)
+        columns.append(column)
 
-# Function to delete a video from the list
-def delete_video(videos):
-    # Show the list before asking for index
-    list_all_videos(videos)
-    index = int(input("Enter the video number to be deleted: "))
+    return columns
 
-    # Validate the index
-    if index < 1 or index > len(videos):
-        print("Enter a valid index >>>")
-    else:
-        # Delete the video from the list
-        del videos[index - 1]
 
-        # Save the updated data
-        save_data_helper(videos)
+def print_slot_machine(columns):
+    for row in range(len(columns[0])):
+        for i, column in enumerate(columns):
+            if i != len(columns) - 1:
+                print(column[row], end=" | ")
+            else:
+                print(column[row], end="")
 
-# Load video data from a file
-def load_data():
-    # Attempt to open the file in read mode and load JSON data
-    try:
-        with open('youtube.txt', 'r') as file:
-            test = json.load(file)
-            return test
-    except FileNotFoundError:
-        # If file not found, return an empty list
-        return []
+        print()
 
-# Save video data to a file
-def save_data_helper(videos):
-    # Open the file in write mode and dump the list as JSON
-    with open('youtube.txt', 'w') as file:
-        json.dump(videos, file)
 
-# Main app loop
-def main():
-    videos = load_data()  # Load existing data
-    print('\n') 
-    print('*' * 70)
-
+def deposit():
     while True:
-        # Menu options
-        print("\nYouTube Manager | Choose an option")
-        print("1. List all YouTube videos")
-        print("2. Add a YouTube video")
-        print("3. Update a YouTube video details")
-        print("4. Delete a YouTube video")
-        print("5. Exit the app")
+        amount = input("What would you like to deposit? $")
+        if amount.isdigit():
+            amount = int(amount)
+            if amount > 0:
+                break
+            else:
+                print("Amount must be greater than 0.")
+        else:
+            print("Please enter a number.")
 
-        choice = input("Enter your choice: \n")
+    return amount
 
-        # Match-case for cleaner branching (Python 3.10+)
-        match choice:
-            case '1':
-                list_all_videos(videos)
 
-            case '2':
-                add_video(videos)
+def get_number_of_lines():
+    while True:
+        lines = input(
+            "Enter the number of lines to bet on (1-" + str(MAX_LINES) + ")? ")
+        if lines.isdigit():
+            lines = int(lines)
+            if 1 <= lines <= MAX_LINES:
+                break
+            else:
+                print("Enter a valid number of lines.")
+        else:
+            print("Please enter a number.")
 
-            case '3':
-                update_video(videos)
+    return lines
 
-            case '4':
-                delete_video(videos)
 
-            case '5':
-                break  # Exit the loop and program
+def get_bet():
+    while True:
+        amount = input("What would you like to bet on each line? $")
+        if amount.isdigit():
+            amount = int(amount)
+            if MIN_BET <= amount <= MAX_BET:
+                break
+            else:
+                print(f"Amount must be between ${MIN_BET} - ${MAX_BET}.")
+        else:
+            print("Please enter a number.")
 
-            case _:
-                print("Invalid Choice")  # Catch all other inputs
+    return amount
 
-        print('\n') 
-        print('*' * 70)
 
-# Standard Python entry-point guard
-if __name__ == "__main__":
-    main()
+def spin(balance):
+    lines = get_number_of_lines()
+    while True:
+        bet = get_bet()
+        total_bet = bet * lines
+
+        if total_bet > balance:
+            print(
+                f"You do not have enough to bet that amount, your current balance is: ${balance}")
+        else:
+            break
+
+    print(
+        f"You are betting ${bet} on {lines} lines. Total bet is equal to: ${total_bet}")
+
+    slots = get_slot_machine_spin(ROWS, COLS, symbol_count)
+    print_slot_machine(slots)
+    winnings, winning_lines = check_winnings(slots, lines, bet, symbol_value)
+    print(f"You won ${winnings}.")
+    print(f"You won on lines:", *winning_lines)
+    return winnings - total_bet
+
+
+def main():
+    balance = deposit()
+    while True:
+        print(f"Current balance is ${balance}")
+        answer = input("Press enter to play (q to quit).")
+        if answer == "q":
+            break
+        balance += spin(balance)
+
+    print(f"You left with ${balance}")
+
+
+main()
